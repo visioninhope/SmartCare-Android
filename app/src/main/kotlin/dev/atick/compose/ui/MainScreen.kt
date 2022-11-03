@@ -1,6 +1,7 @@
 package dev.atick.compose.ui
 
 import android.animation.ValueAnimator
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
@@ -32,45 +33,53 @@ fun MainScreen(
         verticalArrangement = Arrangement.Center
     ) {
 
-        Text(
-            text = "Heart Rate",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colors.onBackground
-        )
-        Text(
-            text = "98.0",
-            fontSize = 80.sp,
-            fontWeight = FontWeight.Thin,
-            color = MaterialTheme.colors.onBackground
-        )
-        Text(
-            text = "BPM",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Medium,
-            color = MaterialTheme.colors.onBackground
-        )
+        AnimatedVisibility(visible = uiState.connectionState == ConnectionState.Connected) {
+            Column(
+                Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(
+                    text = "Heart Rate",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colors.onBackground
+                )
+                Text(
+                    text = "${uiState.heartRate}.0",
+                    fontSize = 80.sp,
+                    fontWeight = FontWeight.Thin,
+                    color = MaterialTheme.colors.onBackground
+                )
+                Text(
+                    text = "BPM",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = MaterialTheme.colors.onBackground
+                )
 
-        AndroidView(
-            factory = { ctx ->
-                LottieAnimationView(ctx).apply {
-                    setAnimation(R.raw.heart_beat)
-                    repeatCount = ValueAnimator.INFINITE
-                    speed = 2.0F
-                    playAnimation()
-                }
-            },
-            modifier = Modifier
-                .height(120.dp)
-                .fillMaxWidth(0.4F)
-        )
+                AndroidView(
+                    factory = { ctx ->
+                        LottieAnimationView(ctx).apply {
+                            setAnimation(R.raw.heart_beat)
+                            repeatCount = ValueAnimator.INFINITE
+                            speed = 2.0F
+                            playAnimation()
+                        }
+                    },
+                    modifier = Modifier
+                        .height(120.dp)
+                        .fillMaxWidth(0.4F)
+                )
+            }
+        }
 
         Button(
             modifier = Modifier
                 .fillMaxWidth(0.5F)
                 .height(40.dp),
             shape = RoundedCornerShape(20.dp),
-            onClick = { /*TODO*/ }
+            onClick = { mainViewModel.connect() }
         ) {
             Text(text = uiState.connectionState.description)
         }
@@ -83,7 +92,7 @@ fun MainScreen(
                 .height(40.dp),
             shape = RoundedCornerShape(20.dp),
             enabled = uiState.connectionState == ConnectionState.Connected,
-            onClick = { /*TODO*/ }
+            onClick = { mainViewModel.record() }
         ) {
             Text(text = uiState.recordState.description)
         }
