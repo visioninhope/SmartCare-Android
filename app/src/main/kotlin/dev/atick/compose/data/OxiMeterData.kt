@@ -15,7 +15,7 @@ data class OxiMeterData(
 ) {
     override fun toString(): String {
         return "$index,$timestamp,$deviceId,$battery,$ppgSignal,$heartRate," +
-            "$ppgSignal,$heartRate,$spO2,$redAdc,$irAdc,$spO2Status,$perfusionIndex"
+            "$spO2,$redAdc,$irAdc,$spO2Status,$perfusionIndex"
     }
 }
 
