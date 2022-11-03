@@ -1,6 +1,6 @@
 package dev.atick.core.ui.theme
 
-import ai.atick.material.MaterialColor
+import androidx.compose.ui.graphics.Color
 
-val Primary = MaterialColor.Indigo500
-val PrimaryVariant = MaterialColor.Indigo200
+val Primary = Color(0xFF_dd7878)
+val PrimaryVariant = Color(0xFF_dc8a78)
