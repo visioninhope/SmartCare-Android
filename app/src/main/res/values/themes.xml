@@ -19,9 +19,9 @@
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="O_MR1">true</item>
         <!-- Customize your theme here. -->
-        <item name="materialAlertDialogTheme">
-            @style/ThemeOverlay.MaterialAlertDialog.Rounded
-        </item>
+<!--        <item name="materialAlertDialogTheme">-->
+<!--            @style/ThemeOverlay.MaterialAlertDialog.Rounded-->
+<!--        </item>-->
     </style>
 
     <style name="Theme.JetpackComposeStarter.NoActionBar">
