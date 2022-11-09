@@ -2,8 +2,8 @@ package dev.atick.compose.ui
 
 import android.content.Context
 import android.os.Environment
-import android.os.Handler
 import android.os.Looper
+import androidx.core.os.HandlerCompat
 import androidx.lifecycle.ViewModel
 import com.orhanobut.logger.Logger
 import com.smartcare.oximetry.library.ConnectionManager
@@ -18,19 +18,20 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.ThreadPoolExecutor
 import javax.inject.Inject
-import kotlin.concurrent.thread
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    @ApplicationContext context: Context
+    @ApplicationContext context: Context,
+    private val executor: ThreadPoolExecutor
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState())
     val uiState = _uiState.asStateFlow()
 
     private val recording = mutableListOf<OxiMeterData>()
 
-    private val handler = Handler(Looper.getMainLooper()) {
+    private val handler = HandlerCompat.createAsync(Looper.getMainLooper()) {
         val index = it.data.getInt(ConnectionManager.KEY_DATA_COUNTER)
         val timestamp = it.data.getLong(ConnectionManager.KEY_DATA_PACKAGE_RECEIVED)
         val deviceId = it.data.getInt(ConnectionManager.KEY_DATA_DEVICE_ID)
@@ -55,7 +56,7 @@ class MainViewModel @Inject constructor(
         _uiState.value = uiState.value.copy(
             heartRate = heartRate
         )
-        return@Handler true
+        true
     }
 
     private val connectionManager = ConnectionManager(context, handler)
@@ -63,7 +64,7 @@ class MainViewModel @Inject constructor(
 
     fun connect() {
         if (uiState.value.connectionState == ConnectionState.Disconnected) {
-            thread {
+            executor.execute {
                 Logger.i("CONNECTING ... ")
                 _uiState.value = uiState.value.copy(
                     connectionState = ConnectionState.Connecting
@@ -82,7 +83,7 @@ class MainViewModel @Inject constructor(
                 }
             }
         } else {
-            thread {
+            executor.execute {
                 Logger.i("DISCONNECTING ... ")
                 _uiState.value = uiState.value.copy(
                     connectionState = ConnectionState.Disconnecting
