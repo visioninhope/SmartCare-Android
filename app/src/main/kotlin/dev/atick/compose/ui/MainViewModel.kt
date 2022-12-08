@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.nio.file.Files
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ThreadPoolExecutor
@@ -117,8 +118,11 @@ class MainViewModel @Inject constructor(
     private fun saveRecording() {
         val timestamp = SimpleDateFormat("dd_M_yyyy_hh_mm_ss", Locale.US).format(Date())
         val csvData = recording.toCsv()
+        val savePath =
+            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+        Files.createDirectories(savePath.toPath())
         val myExternalFile = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS),
+            savePath,
             "${timestamp}.csv"
         )
 
