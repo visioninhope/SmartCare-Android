@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="dev.atick.smartcare" />
+                  <option name="mobileSdkAppId" value="1:1052755869243:android:42e6f3b48d1fc1b9b4e61e" />
+                  <option name="projectId" value="jetpack-android-bcf89" />
+                  <option name="projectNumber" value="1052755869243" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
