@@ -48,11 +48,14 @@ fun Context.showAlertDialog(
     builder.show()
 }
 
+@SuppressLint("MissingPermission")
 fun Context.showNotification(
     notificationId: Int,
-    notification: Notification
+    notification: Notification,
 ) {
-    with(NotificationManagerCompat.from(this)) {
-        notify(notificationId, notification)
+    if (hasPermission(Manifest.permission.POST_NOTIFICATIONS)) {
+        with(NotificationManagerCompat.from(this)) {
+            notify(notificationId, notification)
+        }
     }
 }
