@@ -58,8 +58,8 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onResume() {
-        super.onResume()
         permissionUtils.setupBluetooth(this)
+        super.onResume()
     }
 
 //    private fun isExternalStorageReadOnly(): Boolean {

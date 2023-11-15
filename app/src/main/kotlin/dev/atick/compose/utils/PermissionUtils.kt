@@ -11,7 +11,6 @@ import com.orhanobut.logger.Logger
 import dev.atick.core.utils.extensions.hasPermission
 import dev.atick.core.utils.extensions.permissionLauncher
 import dev.atick.core.utils.extensions.resultLauncher
-import dev.atick.core.utils.extensions.showAlertDialog
 import javax.inject.Inject
 
 class PermissionUtils @Inject constructor(
@@ -30,7 +29,9 @@ class PermissionUtils @Inject constructor(
                 Logger.i("ALL PERMISSIONS GRANTED")
                 enableBluetooth()
             },
-            onFailure = { activity.finishAffinity() }
+            onFailure = {
+                Logger.d("Permission Not GRANTED")
+                activity.finishAffinity() }
         )
 
         bleLauncher = activity.resultLauncher(
@@ -61,11 +62,16 @@ class PermissionUtils @Inject constructor(
 
     private fun askForPermissions() {
         val permissions = mutableListOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            Manifest.permission.POST_NOTIFICATIONS
+            Manifest.permission.ACCESS_FINE_LOCATION
         )
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            permissions.addAll(
+                 listOf(
+                     Manifest.permission.READ_EXTERNAL_STORAGE,
+                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                 )
+            )
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             permissions.addAll(
                 listOf(
@@ -74,11 +80,16 @@ class PermissionUtils @Inject constructor(
                 )
             )
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissions.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
         permissionLauncher.launch(permissions.toTypedArray())
     }
 
     private fun showPermissionRationale(activity: ComponentActivity) {
         if (!isAllPermissionsProvided(activity)) {
+            askForPermissions()
+            /*
             activity.showAlertDialog(
                 title = "Permission Required",
                 message = "This app requires Bluetooth connection " +
@@ -92,6 +103,7 @@ class PermissionUtils @Inject constructor(
                 },
                 onCancel = { activity.finishAffinity() }
             )
+             */
         }
     }
 
@@ -107,6 +119,7 @@ class PermissionUtils @Inject constructor(
     }
 
     private fun isStoragePermissionGranted(context: Context): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) return true
         return context.hasPermission(Manifest.permission.READ_EXTERNAL_STORAGE) &&
             context.hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
