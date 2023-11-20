@@ -77,7 +77,7 @@ dependencies {
     implementation project(path: ":core")
 
     // ... Lottie
-    implementation("com.airbnb.android:lottie:6.1.0")
+    implementation("com.airbnb.android:lottie:6.2.0")
 
     // ... Smart Care
     implementation files("libs/scolib-2.1.0.aar")
