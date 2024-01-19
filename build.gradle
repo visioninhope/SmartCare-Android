@@ -10,7 +10,7 @@ buildscript {
         kotlin_version = "1.9.22"
 
         google_services_version = "4.4.0"
-        analytics_version = "32.7.0"
+        analytics_version = "32.7.1"
         crashlytics_version = "2.9.9"
 
         compose_version = "1.5.4"
