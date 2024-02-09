@@ -9,8 +9,8 @@ buildscript {
         agp_version = "8.2.2"
         kotlin_version = "1.9.22"
 
-        google_services_version = "4.4.0"
-        analytics_version = "32.7.1"
+        google_services_version = "4.4.1"
+        analytics_version = "32.7.2"
         crashlytics_version = "2.9.9"
 
         compose_version = "1.6.1"
