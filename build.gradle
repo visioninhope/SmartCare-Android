@@ -6,11 +6,11 @@ buildscript {
         version_code = 7
         version_name = "1.0.4"
 
-        agp_version = "8.2.2"
+        agp_version = "8.3.0"
         kotlin_version = "1.9.22"
 
         google_services_version = "4.4.1"
-        analytics_version = "32.7.2"
+        analytics_version = "32.7.3"
         crashlytics_version = "2.9.9"
 
         compose_version = "1.6.2"
