@@ -6,15 +6,15 @@ buildscript {
         version_code = 7
         version_name = "1.0.4"
 
-        agp_version = "8.3.0"
-        kotlin_version = "1.9.22"
+        agp_version = "8.3.1"
+        kotlin_version = "1.9.23"
 
         google_services_version = "4.4.1"
-        analytics_version = "32.7.3"
+        analytics_version = "32.7.4"
         crashlytics_version = "2.9.9"
 
-        compose_version = "1.6.3"
-        compose_compiler_version = "1.5.10"
+        compose_version = "1.6.4"
+        compose_compiler_version = "1.5.11"
         lifecycle_version = "2.7.0"
         nav_version = "2.7.7"
         hilt_version = "2.51"
